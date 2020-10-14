@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Assignment2</title>
+	<link rel="stylesheet" href="styles/normalize.css">
+	<link rel="stylesheet" href="styles/main.css">
+	<script type="text/javascript">
+	
+		function validate(){	
+			let v1 = validateNameField();
+            let v2 = validateLastNameField();
+            let v3 = validateEmailField();
+            let v4 = validatePhoneField();
+            let v5 = validateJobField();
+            let v6 = validateCountryField();
+            let v7 = validatePCField();
+			
+			
+			//set focus to a first offending field
+			let focus;
+			if(errorMessagesName.innerHTML != "")
+			{
+				focus = document.getElementById('name').focus();
+			}else if(errorMessagesLastName.innerHTML != "")
+			{
+				focus = document.getElementById('lastname').focus();
+			}else if(errorMessagesEmail.innerHTML != "")
+			{
+				focus = document.getElementById('email').focus();
+			}else if(errorMessagesPhone.innerHTML != "")
+			{
+				focus = document.getElementById('phone').focus();
+			}else if(errorMessagesJob.innerHTML != "")
+			{
+				focus = document.getElementById('job').focus();
+			}else if(errorMessagesCountry.innerHTML != "")
+			{
+				focus = document.getElementById('country').focus();
+			}else if(errorMessagesPC.innerHTML != "")
+			{
+				focus = document.getElementById('postalCode').focus();
+			}
+			return v1 && v2 && v3 && v4 && v5 && v6 && v7 && focus;
+		}
+		
+		//validate name
+		function validateNameField(){
+		
+			let isValid = true;
+            let name = document.getElementById('name');
+            let errorMessages = document.getElementById('errorMessagesName');
+			errorMessages.innerHTML = '';
+			name.value = name.value.trim();
+			
+			//make sure text field has some text in it
+			if(name.value.length < 2)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Name must be longer than 1 letter<br>';
+			}
+			//make first letter uppercase
+			if(name.value.length > 1)
+			{
+				let firstLetter = name.value.charAt(0);
+				if(firstLetter != firstLetter.toUpperCase())
+				{
+					firstLetter = firstLetter.toUpperCase();
+				}
+			}			
+			return isValid;
+		}
+		
+		//validate lastname
+		function validateLastNameField(){
+		
+			let isValid = true;
+            let lastname = document.getElementById('lastname');
+            let errorMessages = document.getElementById('errorMessagesLastName');
+			errorMessages.innerHTML = '';
+			lastname.value = lastname.value.trim();
+			
+			//make sure text field has some text in it
+			if(lastname.value.length < 2)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Last name must be longer than 1 letter<br>';
+			}
+			//make first letter uppercase
+			if(lastname.value.length > 1)
+			{
+				let firstLetter = lastname.value.charAt(0);
+				if(firstLetter != firstLetter.toUpperCase())
+				{
+					firstLetter = firstLetter.toUpperCase();
+				}
+			}			
+			return isValid;
+		}
+		
+		//validate email
+		function validateEmailField(){
+		
+			let isValid = true;
+            let email = document.getElementById('email');
+            let errorMessages = document.getElementById('errorMessagesEmail');
+			errorMessages.innerHTML = '';
+			
+			//make sure text field has some text in it
+			if(/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(email.value) == false)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Email is in incorrect format<br>';
+			}			
+			return isValid;
+		}
+		
+		//validate phone
+		function validatePhoneField(){
+		
+			let isValid = true;
+            let phone = document.getElementById('phone');
+            let errorMessages = document.getElementById('errorMessagesPhone');
+			errorMessages.innerHTML = '';
+			
+			//make validation
+			if(/^\(?(\d{3})\)?[\.\-\/\s]?(\d{3})[\.\-\/\s]?(\d{4})$/.test(phone.value) == false)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Phone is in incorrect format<br>(xxx)-xxx-xxxx<br>';
+			}	
+			return isValid;
+		}
+		
+		//validate job
+		function validateJobField(){
+		
+			let isValid = true;
+            let job = document.getElementById('job');
+            let errorMessages = document.getElementById('errorMessagesJob');
+			errorMessages.innerHTML = '';
+			job.value = job.value.trim();
+			
+			//make sure text field has some text in it
+			if(job.value.length < 1)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Field cannot be empty<br>';
+			}
+			//make first letter uppercase
+			if(job.value.length > 0)
+			{
+				let firstLetter = job.value.charAt(0);
+				if(firstLetter != firstLetter.toUpperCase())
+				{
+					firstLetter = firstLetter.toUpperCase();
+				}
+			}			
+			return isValid;
+		}
+		
+		//validate country
+		function validateCountryField(){
+		
+			let isValid = true;
+            let country = document.getElementById('country');
+            let errorMessages = document.getElementById('errorMessagesCountry');
+			errorMessages.innerHTML = '';
+			
+			//make sure something is chosen
+			if(country.selectedIndex <= 0)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Field cannot be empty<br>';
+			}	
+			return isValid;
+		}
+		
+		//validate PC
+		function validatePCField(){
+		
+			let isValid = true;
+            let postalCode = document.getElementById('postalCode');
+            let errorMessages = document.getElementById('errorMessagesPC');
+			errorMessages.innerHTML = '';
+			
+			//make UpperCase
+			postalCode.value = postalCode.value.toUpperCase();
+			
+			//make validation
+			if(/^[A-Z][0-9][A-Z]\s?[0-9][A-Z][0-9]$/i.test(postalCode.value) == false)
+			{
+				isValid = false;
+				errorMessages.innerHTML += 'Postal Code is in incorrect format<br>N1N 1N1<br>';
+			}	
+			return isValid;		
+		}
+		
+	</script>
+</head>
+<body>
+<div id="form">
+	<h1>Form</h1>
+	<form action="http://symlink.dk/code/php/submit/" method="POST" onsubmit="return validate();">
+		<label class="label">Name*</label>
+		<input id="name" name="name" type="text" autofocus onblur="validateNameField();"><br>
+		<p id="errorMessagesName"></p><br>
+		<label class="label">Last Name*</label>
+		<input id="lastname" name="lastname" type="text" onblur="validateLastNameField();"><br>
+		<p id="errorMessagesLastName"></p><br>
+		<label class="label">Email*</label>
+		<input id="email" name="email" type="text" placeholder="example@gmail.com" onblur="validateEmailField();"><br>
+		<p id="errorMessagesEmail"></p><br>
+		<label class="label">Phone*</label>
+		<input id="phone" name="phone" type="text" onblur="validatePhoneField();"><br>
+		<p id="errorMessagesPhone"></p><br>
+		<label class="label">Job Title*</label>
+		<input id="job" name="job" type="text" onblur="validateJobField();"><br>
+		<p id="errorMessagesJob"></p><br>
+		<label class="label">Country*</label>
+		<select id="country" name="country" onblur="validateCountryField();">
+			<option value=" "></option>
+		    <option value="canada">Canada</option>
+		    <option value="mexico">Mexico</option>
+		    <option value="us">U.S.</option>
+		</select><br>
+		<p id="errorMessagesCountry"></p><br>
+		<label class="label">Postal Code*</label>
+		<input id="postalCode" name="postalCode" type="text" onblur="validatePCField();"><br>
+		<p id="errorMessagesPC"></p><br>
+		<label class="label">Gender</label>
+		<input type="radio" name="gender" id="m" value="m">
+		<label class="gender" for="M">M</label>
+		<input type="radio" name="gender" id="w" value="w">
+		<label class="gender" for="W">W</label><br>
+		<p id="errorMessagesGender"></p><br>
+		<label>This Website is</label><br>
+			   <input type="checkbox" name="fun" id="fun" value="website">
+			   <label class="check" for="fun">Fun to visit</label><br>
+		       <input type="checkbox" name="well" id="well" value="website">
+			   <label class="check" for="well">Well designed</label><br>
+			   <input type="checkbox" name="uses" id="uses" value="website">
+			   <label class="check" for="uses">Uses good colours</label><br>
+			   <p id="errorMessagesWebsite"></p><br>
+		<label class="label" >Comments</label>
+		<textarea id="comments" name="comments" rows="7" cols="45"
+		    placeholder="Please enter comments here."></textarea><br>
+		<p id="errorMessagesComments"></p><br>
+		<input type="submit">
+	</form>	 
+	
+</div>
+</body>
+</html>
